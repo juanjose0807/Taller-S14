@@ -94,18 +94,21 @@ void readFactura() {
         return;
     }
     while (fread(&factura, sizeof(struct Factura), 1, file)) {
-        printf("Cedula: %d\n", factura.cedula);
+        printf("\n-----------------------------\n");
+        printf("Cedula del Cliente: %d\n", factura.cedula);
         printf("Nombre del Cliente: %s\n", factura.nombre);
-        printf("Productos:\n");
-        printf("%s %s %s %s\n", "Nombre", "Cantidad", "Precio", "Total");
+        printf("\nProductos:\n");
+        printf("Nombre\tCantidad\tPrecio\tTotal\n");
         for (int i = 0; i < factura.numProductos; i++) {
             float totalProducto = factura.productos[i].cantidad * factura.productos[i].precio;
-            printf("%s %d %.2f %.2f\n", factura.productos[i].nombre, factura.productos[i].cantidad, factura.productos[i].precio, totalProducto);
+            printf("%s\t%d\t%.2f\t%.2f\n", factura.productos[i].nombre, factura.productos[i].cantidad, factura.productos[i].precio, totalProducto);
         }
-        printf("Total factura: %.2f\n\n", factura.total);
+        printf("\nTotal de la Factura: %.2f\n", factura.total);
+        printf("-----------------------------\n\n");
     }
     fclose(file);
 }
+
 
 void editarFactura() {
     FILE *file = fopen("factura.dat", "rb");
